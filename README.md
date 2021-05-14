@@ -19,7 +19,9 @@
 ###### Como rodar o projeto com Maven
 	Na pasta do projeto:
 	cd hinto.api
-  	mvn run
+  	mvn package
+	cd target
+	na pasta target se encontrará o executável .jar da aplicação que pode ser rodado por terminal java -jar nomeJar.jar ou diretamente nela
 
 ###### Verbos para [Usuario] Http da API:
         Criar Usuário	          | POST   | /usuario - conteúdo do corpo da requisição: application/json
