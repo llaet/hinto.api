@@ -11,7 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToOne;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -41,7 +41,7 @@ public class ListaInteresse implements Serializable {
     @JsonIgnore
     private Usuario usuario;
     
-    @OneToMany
+    @ManyToMany
     private List<Midia> midias = new ArrayList<>();
 
     public ListaInteresse(){}
