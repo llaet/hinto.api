@@ -15,18 +15,15 @@ public class ProdutorDTO implements Serializable {
     
     @NotNull
     private String nome;
-    private String profissao;
     
     public ProdutorDTO() {}
     
     public ProdutorDTO(Produtor artista) {
     	this.nome = artista.getNome();
-    	this.profissao = artista.getProfissao();
     }
     
     public ProdutorDTO(@NotNull String nome, String profissao) {
     	this.nome = nome;
-    	this.profissao = profissao;
     }
 
 	public String getNome() {
@@ -37,20 +34,11 @@ public class ProdutorDTO implements Serializable {
 		this.nome = nome;
 	}
 
-	public String getProfissao() {
-		return profissao;
-	}
-
-	public void setProfissao(String profissao) {
-		this.profissao = profissao;
-	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
 		result = prime * result + ((nome == null) ? 0 : nome.hashCode());
-		result = prime * result + ((profissao == null) ? 0 : profissao.hashCode());
 		return result;
 	}
 
@@ -68,11 +56,6 @@ public class ProdutorDTO implements Serializable {
 				return false;
 		} else if (!nome.equals(other.nome))
 			return false;
-		if (profissao == null) {
-			if (other.profissao != null)
-				return false;
-		} else if (!profissao.equals(other.profissao))
-			return false;
 		return true;
 	}
 
@@ -80,7 +63,6 @@ public class ProdutorDTO implements Serializable {
 	public String toString() {
 		return "ArtistaDTO {"
 				+ "nome=" + nome 
-				+ ", profissao=" + profissao 
 				+ "}";
 	}
 

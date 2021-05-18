@@ -37,7 +37,7 @@ public class MidiaRetornadoDTO implements Serializable {
         this.sinopse = midia.getSinopse();
         this.tipo = midia.getTipo();
         this.dataLancamento = midia.getDataLancamento();
-        this.favoritada = midia.getFavoritada();
+        this.favoritada = midia.getAfinidade();
         this.produtores = midia.getProdutores();
         this.generos = midia.getGeneros();
     }

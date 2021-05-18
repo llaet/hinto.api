@@ -148,16 +148,7 @@ public class MidiaServicoImpl implements MidiaServico {
 
 	@Override
 	public List<MidiaRetornadoDTO> buscarPorString(String stringBusca) {
-		List<Midia> todasMidias = this.dao.findAll();
 		List<Midia> midiasBuscadasPorString = this.dao.findByTituloContainingIgnoreCaseOrSinopseContainingIgnoreCase(stringBusca, stringBusca);
-		
-		for (Midia midia : todasMidias) {
-			for (Genero genero : midia.getGeneros()) {
-				if (genero.getDescricao().contains(stringBusca)) {
-					midiasBuscadasPorString.add(midia);
-				}
-			}
-		}
 		
 		return midiasBuscadasPorString.stream().map(midia -> this.toDTO(midia))
 				.collect(Collectors.toList());

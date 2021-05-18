@@ -4,7 +4,7 @@ import java.io.Serializable;
 
 import javax.validation.constraints.NotNull;
 
-public class ListaInteresseDTO implements Serializable {
+public class ListaFavoritosDTO implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	
@@ -12,9 +12,9 @@ public class ListaInteresseDTO implements Serializable {
 	private Long usuarioID;
 	private Long midiaID;
 	
-	public ListaInteresseDTO() {}
+	public ListaFavoritosDTO() {}
 	
-	public ListaInteresseDTO(@NotNull Long usuarioID, Long midiaID) {
+	public ListaFavoritosDTO(@NotNull Long usuarioID, Long midiaID) {
 		super();
 		this.usuarioID = usuarioID;
 		this.midiaID = midiaID;
@@ -53,7 +53,7 @@ public class ListaInteresseDTO implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		ListaInteresseDTO other = (ListaInteresseDTO) obj;
+		ListaFavoritosDTO other = (ListaFavoritosDTO) obj;
 		if (midiaID == null) {
 			if (other.midiaID != null)
 				return false;

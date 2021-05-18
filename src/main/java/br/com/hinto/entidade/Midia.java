@@ -42,7 +42,7 @@ public class Midia implements Serializable {
 	private Date dataLancamento;
 	
 	@Column(nullable = true)
-	private Boolean favoritada;
+	private Boolean afinidade;
 	
 	@ManyToMany
 	private List<Genero> generos = new ArrayList<>();
@@ -116,19 +116,19 @@ public class Midia implements Serializable {
 		this.dataLancamento = dataLancamento;
 	}
 
-	public Boolean getFavoritada() {
-		return favoritada;
+	public Boolean getAfinidade() {
+		return afinidade;
 	}
 
-	public void setAfinidade(Boolean favoritada) {
-		this.favoritada = favoritada;
+	public void setAfinidade(Boolean afinidade) {
+		this.afinidade = afinidade;
 	}
 
 	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((favoritada == null) ? 0 : favoritada.hashCode());
+		result = prime * result + ((afinidade == null) ? 0 : afinidade.hashCode());
 		result = prime * result + ((dataLancamento == null) ? 0 : dataLancamento.hashCode());
 		result = prime * result + ((generos == null) ? 0 : generos.hashCode());
 		result = prime * result + ((id == null) ? 0 : id.hashCode());
@@ -149,10 +149,10 @@ public class Midia implements Serializable {
 		if (getClass() != obj.getClass())
 			return false;
 		Midia other = (Midia) obj;
-		if (favoritada == null) {
-			if (other.favoritada != null)
+		if (afinidade == null) {
+			if (other.afinidade != null)
 				return false;
-		} else if (!favoritada.equals(other.favoritada))
+		} else if (!afinidade.equals(other.afinidade))
 			return false;
 		if (dataLancamento == null) {
 			if (other.dataLancamento != null)

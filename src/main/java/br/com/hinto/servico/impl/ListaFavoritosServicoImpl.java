@@ -7,31 +7,31 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import br.com.hinto.entidade.ListaInteresse;
+import br.com.hinto.entidade.ListaFavoritos;
 import br.com.hinto.entidade.Midia;
 import br.com.hinto.entidade.Usuario;
-import br.com.hinto.entidade.dto.ListaInteresseDTO;
+import br.com.hinto.entidade.dto.ListaFavoritosDTO;
 import br.com.hinto.excecao.DadosIncorretosException;
-import br.com.hinto.repositorio.ListaInteresseDAO;
-import br.com.hinto.servico.ListaInteresseServico;
+import br.com.hinto.repositorio.ListaFavoritosDAO;
+import br.com.hinto.servico.ListaFavoritosServico;
 import br.com.hinto.servico.MidiaServico;
 import br.com.hinto.servico.UsuarioServico;
 
 @Service
-public class ListaInteresseServicoImpl implements ListaInteresseServico {
+public class ListaFavoritosServicoImpl implements ListaFavoritosServico {
 	
 	@Autowired
-	private ListaInteresseDAO dao;
+	private ListaFavoritosDAO dao;
 	@Autowired
 	private MidiaServico midiaServico;
 	@Autowired
 	private UsuarioServico usuarioServico;
 
 	@Override
-	public ListaInteresse salvar(ListaInteresseDTO dto) {
-		ListaInteresse lista = this.toListaInteresse(dto);
+	public ListaFavoritos salvar(ListaFavoritosDTO dto) {
+		ListaFavoritos lista = this.toListaInteresse(dto);
 		
-		ListaInteresse listaBuscada = this.dao.findByUsuarioId(dto.getUsuarioID());
+		ListaFavoritos listaBuscada = this.dao.findByUsuarioId(dto.getUsuarioID());
 		
 		if (listaBuscada == null) {
 			this.dao.saveAndFlush(lista);
@@ -40,7 +40,7 @@ public class ListaInteresseServicoImpl implements ListaInteresseServico {
 		return lista;
 	}
 	
-	private void salvar(ListaInteresse lista) {
+	private void salvar(ListaFavoritos lista) {
 		this.dao.saveAndFlush(lista);
 	}
 	
@@ -49,8 +49,8 @@ public class ListaInteresseServicoImpl implements ListaInteresseServico {
 	 * @param dto
 	 * @return objeto lista de interesse
 	 */
-	private ListaInteresse toListaInteresse(ListaInteresseDTO dto) {
-		ListaInteresse listaInteresse = new ListaInteresse();
+	private ListaFavoritos toListaInteresse(ListaFavoritosDTO dto) {
+		ListaFavoritos listaInteresse = new ListaFavoritos();
 		
 		listaInteresse.setDataCriacao(LocalDateTime.now());
 		listaInteresse.setDataAtualizacao(LocalDateTime.now());
@@ -71,8 +71,8 @@ public class ListaInteresseServicoImpl implements ListaInteresseServico {
 	}
 	
 	@Override
-	public ListaInteresse atualizarPorIdUsuario(Long midiaID, Long idUsuario) {
-		ListaInteresse lista = this.dao.findByUsuarioId(idUsuario);
+	public ListaFavoritos atualizarPorIdUsuario(Long midiaID, Long idUsuario) {
+		ListaFavoritos lista = this.dao.findByUsuarioId(idUsuario);
 		
 		if (lista != null) {
 			Midia midia = this.toMidia(midiaID);
@@ -81,24 +81,47 @@ public class ListaInteresseServicoImpl implements ListaInteresseServico {
 			this.salvar(lista);
 			return lista;
 		}
-        throw new DadosIncorretosException("Não há registros de listas de interesse com ID informado.");
+        throw new DadosIncorretosException("Não há registros de listas de favoritos com ID informado.");
 	}
 
 	@Override
 	public void deletarPorIdUsuario(Long idUsuario) {
-		ListaInteresse lista = this.encontrarPorIdUsuario(idUsuario);
+		ListaFavoritos lista = this.encontrarPorIdUsuario(idUsuario);
 		
 		lista.getMidias().clear();
 		this.salvar(lista);
 	}
 
 	@Override
-	public ListaInteresse encontrarPorIdUsuario(Long idUsuario) {
-		ListaInteresse lista = this.dao.findByUsuarioId(idUsuario);
+	public ListaFavoritos encontrarPorIdUsuario(Long idUsuario) {
+		ListaFavoritos lista = this.dao.findByUsuarioId(idUsuario);
 		
 		if (lista != null) {
 			return lista;
 		}
         throw new DadosIncorretosException("Lista de interesse não encontrada!");
 	}
+
+	@Override
+	public ListaFavoritos listarFavoritosPorIdUsuario(Long id) {
+		ListaFavoritos lista = this.dao.findByUsuarioId(id);
+		
+		return lista;
+	}
+
+	@Override
+	public ListaFavoritos removerMidiaPorId(Long idUsuario, Long midiaID) {
+		ListaFavoritos favoritos = this.dao.findByUsuarioId(idUsuario);
+		
+		Midia midiaEncontrada = favoritos.getMidias().stream()
+				.filter(midia -> midia.getId().equals(midiaID)).findFirst().orElse(null);
+		
+		if (midiaEncontrada != null) {
+			favoritos.getMidias().remove(midiaEncontrada);
+		}
+		this.dao.saveAndFlush(favoritos);
+		
+		return favoritos;
+	}
+
 }

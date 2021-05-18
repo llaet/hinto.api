@@ -11,12 +11,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import br.com.hinto.entidade.Usuario;
+import br.com.hinto.entidade.dto.ListaFavoritosDTO;
+import br.com.hinto.entidade.dto.ListaInteresseDTO;
 import br.com.hinto.entidade.dto.UsuarioCriadoDTO;
 import br.com.hinto.entidade.dto.UsuarioRetornadoDTO;
 import br.com.hinto.enumeracao.Perfil;
 import br.com.hinto.enumeracao.Sexo;
 import br.com.hinto.excecao.DadosIncorretosException;
 import br.com.hinto.repositorio.UsuarioDAO;
+import br.com.hinto.servico.ListaFavoritosServico;
+import br.com.hinto.servico.ListaInteresseServico;
 import br.com.hinto.servico.UsuarioServico;
 
 /**
@@ -28,14 +32,34 @@ public class UsuarioServicoImpl implements UsuarioServico, UserDetailsService {
 	
 	@Autowired
 	private UsuarioDAO dao;
+	@Autowired
+	private ListaInteresseServico interesseServico;
+	@Autowired
+	private ListaFavoritosServico favoritosServico;
 
 	@Override
 	public UsuarioRetornadoDTO salvar(UsuarioCriadoDTO dto) {
 		//cria usuario a partir do dto recebido
 		Usuario usuario = this.toUsuario(dto);
-		this.dao.saveAndFlush(usuario);
 		
-		return this.toDTO(usuario);
+		Usuario usuarioSalvo = this.dao.saveAndFlush(usuario);
+		
+		this.criarListaInteresse(usuarioSalvo);
+		this.criarListaFavoritos(usuarioSalvo);
+		
+		return this.toDTO(usuarioSalvo);
+	}
+	
+	private void criarListaInteresse(Usuario usuario) {
+		ListaInteresseDTO dto = new ListaInteresseDTO();
+		dto.setUsuarioID(usuario.getId());
+		this.interesseServico.salvar(dto);
+	}
+	
+	private void criarListaFavoritos(Usuario usuario) {
+		ListaFavoritosDTO dto = new ListaFavoritosDTO();
+		dto.setUsuarioID(usuario.getId());
+		this.favoritosServico.salvar(dto);
 	}
 	
 	/**
