@@ -20,7 +20,7 @@ import br.com.hinto.servico.impl.ProdutorServicoImpl;
 import br.com.hinto.servico.impl.GeneroServicoImpl;
 import br.com.hinto.servico.impl.MidiaServicoImpl;
 
-@Configuration
+//@Configuration
 public class CargaMidiaFilme {
 	
 	@Value("${tmdb.url.base.filme.top}")
