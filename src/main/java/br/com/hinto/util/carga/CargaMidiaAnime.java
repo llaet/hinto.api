@@ -15,7 +15,7 @@ import br.com.hinto.entidade.Genero;
 import br.com.hinto.servico.impl.GeneroServicoImpl;
 import br.com.hinto.servico.impl.MidiaServicoImpl;
 
-@Configuration
+//@Configuration
 public class CargaMidiaAnime {
 	
 	@Value("${url.base.busca.api}")
