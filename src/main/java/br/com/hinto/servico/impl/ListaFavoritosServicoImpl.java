@@ -124,4 +124,9 @@ public class ListaFavoritosServicoImpl implements ListaFavoritosServico {
 		return favoritos;
 	}
 
+	@Override
+	public void deletarListaPorId(Long id) {		
+		this.dao.deleteById(id);	
+	}
+
 }

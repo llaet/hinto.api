@@ -101,4 +101,9 @@ public class ListaInteresseServicoImpl implements ListaInteresseServico {
 		}
         throw new DadosIncorretosException("Lista de interesse não encontrada!");
 	}
+
+	@Override
+	public void deletarListaPorId(Long id) {
+		this.dao.deleteById(id);	
+	}
 }

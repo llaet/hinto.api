@@ -10,6 +10,8 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import br.com.hinto.entidade.ListaFavoritos;
+import br.com.hinto.entidade.ListaInteresse;
 import br.com.hinto.entidade.Usuario;
 import br.com.hinto.entidade.dto.ListaFavoritosDTO;
 import br.com.hinto.entidade.dto.ListaInteresseDTO;
@@ -106,6 +108,16 @@ public class UsuarioServicoImpl implements UsuarioServico, UserDetailsService {
 	public void deletar(Long idUsuario) {
 		//verifica se o usuario existe
 		this.encontrarPorId(idUsuario);
+		try {
+		ListaFavoritos favoritos = this.favoritosServico.encontrarPorIdUsuario(idUsuario);
+		ListaInteresse interesses = this.interesseServico.encontrarPorIdUsuario(idUsuario);
+		
+		this.favoritosServico.deletarListaPorId(favoritos.getId());
+		this.interesseServico.deletarListaPorId(interesses.getId());
+		
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
 		
 		this.dao.deleteById(idUsuario);
 	}

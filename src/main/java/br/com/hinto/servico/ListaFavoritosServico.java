@@ -15,4 +15,5 @@ public interface ListaFavoritosServico {
 	public ListaFavoritos atualizarPorIdUsuario(Long midiaID, Long idUsuario);
 	public ListaFavoritos encontrarPorIdUsuario(Long idUsuario);
 	public ListaFavoritos listarFavoritosPorIdUsuario(Long id);
+	public void deletarListaPorId(Long id);
 }
