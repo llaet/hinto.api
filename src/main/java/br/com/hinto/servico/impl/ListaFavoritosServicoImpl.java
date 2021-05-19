@@ -1,8 +1,6 @@
 package br.com.hinto.servico.impl;
 
 import java.time.LocalDateTime;
-import java.util.List;
-import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -76,7 +74,9 @@ public class ListaFavoritosServicoImpl implements ListaFavoritosServico {
 		
 		if (lista != null) {
 			Midia midia = this.toMidia(midiaID);
-			lista.setMidia(midia);
+			if (!lista.getMidias().contains(midia)) {
+				lista.setMidia(midia);
+			}
 			lista.setDataAtualizacao(LocalDateTime.now());
 			this.salvar(lista);
 			return lista;
